@@ -15,5 +15,6 @@ class Activity2 : AppCompatActivity() {
 
 
 
+
     }
 }
