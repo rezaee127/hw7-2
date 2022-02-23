@@ -13,8 +13,10 @@ class Activity2 : AppCompatActivity() {
         binding = Activity2Binding.inflate(layoutInflater)
         setContentView(binding.root)
 
-
-
+        val answer=intent.getStringExtra("Answer")
+        binding.show.setOnClickListener {
+            binding.textView2.text=answer
+        }
 
     }
 }
