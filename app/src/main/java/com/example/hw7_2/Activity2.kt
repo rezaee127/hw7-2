@@ -1,5 +1,6 @@
 package com.example.hw7_2
 
+
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.hw7_2.databinding.Activity2Binding
@@ -20,3 +21,11 @@ class Activity2 : AppCompatActivity() {
 
     }
 }
+
+
+
+
+
+/*override fun onBackPressed() {
+    Toast.makeText(this,"backButton", Toast.LENGTH_LONG).show()
+}*/
