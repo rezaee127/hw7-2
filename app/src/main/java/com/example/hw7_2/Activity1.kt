@@ -8,8 +8,9 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.hw7_2.databinding.Activity1Binding
 
 var count=0
-var answerNumber=0
+var cheatNumber=0
 var listOfCheats=ArrayList<Int>()
+var listOfAnswer=ArrayList<Int>()
 class Activity1 : AppCompatActivity() {
     private lateinit var binding:Activity1Binding
 
@@ -26,7 +27,7 @@ class Activity1 : AppCompatActivity() {
         setContentView(binding.root)
 
 
-        count= answerNumber
+        count= cheatNumber
         answer()
 
 
@@ -34,8 +35,8 @@ class Activity1 : AppCompatActivity() {
             val intent=Intent(this,Activity2::class.java)
             intent.putExtra("Answer",listOfAnswers[count])
             startActivity(intent)
-            answerNumber=count
-            listOfCheats.add(answerNumber)
+            cheatNumber=count
+            listOfCheats.add(cheatNumber)
         }
 
 
@@ -58,13 +59,23 @@ class Activity1 : AppCompatActivity() {
 
     @SuppressLint("SetTextI18n")
     private fun answer(){
+        if (count !in listOfAnswer){
+            binding.tru.isEnabled=true
+            binding.fals.isEnabled=true
+        }
+        if (count!=0)
+            binding.prev.isEnabled=true
+        if (count!=9)
+            binding.next.isEnabled=true
 
         if (count==0){
-            binding.prev.isClickable=false
+            binding.prev.isEnabled=false
             binding.textView.text="Question ${count+1} :    ${listOfStrings[count]}"
             binding.tru.setOnClickListener {
                 correct()
             }
+
+
             binding.fals.setOnClickListener {
                 inCorrect()
             }
@@ -158,7 +169,7 @@ class Activity1 : AppCompatActivity() {
         }
 
         if (count==9){
-            binding.next.isClickable=false
+            binding.next.isEnabled=false
             binding.textView.text="Question ${count+1} :    ${listOfStrings[count]}"
             binding.tru.setOnClickListener {
                 inCorrect()
@@ -172,19 +183,21 @@ class Activity1 : AppCompatActivity() {
     }
 
     private fun correct(){
-        if (listOfCheats.contains(count)){
+        if (count in listOfCheats){
             Toast.makeText(this, "Cheating is Wrong", Toast.LENGTH_SHORT).show()
         }else {
             Toast.makeText(this, "Correct!", Toast.LENGTH_SHORT).show()
         }
-        binding.tru.isClickable = false
-        binding.fals.isClickable = false
+        listOfAnswer.add(count)
+        binding.tru.isEnabled = false
+        binding.fals.isEnabled = false
     }
 
     private fun inCorrect(){
         Toast.makeText(this,"Incorrect!",Toast.LENGTH_SHORT).show()
-        binding.tru.isClickable=false
-        binding.fals.isClickable=false
+        listOfAnswer.add(count)
+        binding.tru.isEnabled=false
+        binding.fals.isEnabled=false
     }
 
 }
