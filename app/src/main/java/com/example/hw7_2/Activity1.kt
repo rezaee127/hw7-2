@@ -59,10 +59,10 @@ class Activity1 : AppCompatActivity() {
 
     @SuppressLint("SetTextI18n")
     private fun answer(){
-        if (count !in listOfAnswer){
-            binding.tru.isEnabled=true
-            binding.fals.isEnabled=true
-        }
+      //  if (count !in listOfAnswer){
+      //      binding.tru.isEnabled=true
+      //      binding.fals.isEnabled=true
+     //   }
         if (count!=0)
             binding.prev.isEnabled=true
         if (count!=9)
@@ -188,16 +188,16 @@ class Activity1 : AppCompatActivity() {
         }else {
             Toast.makeText(this, "Correct!", Toast.LENGTH_SHORT).show()
         }
-        listOfAnswer.add(count)
-        binding.tru.isEnabled = false
-        binding.fals.isEnabled = false
+      //  listOfAnswer.add(count)
+      //  binding.tru.isEnabled = false
+       // binding.fals.isEnabled = false
     }
 
     private fun inCorrect(){
         Toast.makeText(this,"Incorrect!",Toast.LENGTH_SHORT).show()
-        listOfAnswer.add(count)
-        binding.tru.isEnabled=false
-        binding.fals.isEnabled=false
+      //  listOfAnswer.add(count)
+       // binding.tru.isEnabled=false
+      //  binding.fals.isEnabled=false
     }
 
 }
