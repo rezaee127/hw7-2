@@ -5,12 +5,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
 import com.example.hw7_2.databinding.FragmentSecondBinding
 
 
 class SecondFragment : Fragment() {
-
     lateinit var  binding : FragmentSecondBinding
+    val vModel: SharedViewModel by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -30,9 +32,10 @@ class SecondFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val answer=requireArguments().getString("Answer")
+        val answer=requireArguments().getBoolean("Answer")
         binding.show.setOnClickListener {
-            binding.textView2.text=answer
+            vModel.listOfQuastions[vModel.cheatNumber].isCheat = true
+            binding.textView2.text=answer.toString()
         }
 
     }
