@@ -18,10 +18,10 @@ import com.example.hw7_2.databinding.FragmentFirstBinding
 
 
 class FirstFragment : Fragment() {
-    lateinit var binding: FragmentFirstBinding
-    val vModel: SharedViewModel by viewModels()
+    private lateinit var binding: FragmentFirstBinding
+    private val vModel: SharedViewModel by viewModels()
 
-    //var listOfStrings=ArrayList<String>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -30,7 +30,7 @@ class FirstFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentFirstBinding.inflate(inflater, container, false)
         return binding.root
         // Inflate the layout for this fragment
@@ -47,10 +47,10 @@ class FirstFragment : Fragment() {
 
         binding.cheat.setOnClickListener {
             vModel.cheatNumber = vModel.count
-            //listOfCheats.add(cheatNumber)
-            //vModel.listOfQuastions[vModel.count].isCheat = true
+            vModel.listOfQuastions[vModel.count].isCheat = true
             val bundle = bundleOf("Answer" to vModel.listOfQuastions[vModel.count].answer)
             findNavController().navigate(R.id.action_firstFragment_to_secondFragment, bundle)
+
         }
 
 
@@ -70,11 +70,11 @@ class FirstFragment : Fragment() {
 
     @SuppressLint("SetTextI18n")
     private fun answer() {
-        //  if (count !in listOfAnswer){
-        //      binding.tru.isEnabled=true
-        //      binding.fals.isEnabled=true
-        //   }
-
+        if (vModel.count in vModel.listOfAnswer){
+            disable()
+        }else{
+            enable()
+        }
 
         for (i in 0..9) {
 
@@ -115,129 +115,7 @@ class FirstFragment : Fragment() {
         }
 
 
-        /*    if (vModel.count == 0) {
-                binding.prev.isEnabled = false
-                binding.textView.text =
-                    "Question ${vModel.count + 1} :    ${vModel.listOfQuastions[vModel.count].question}"
-                binding.tru.setOnClickListener {
-                    correct()
-                }
 
-
-                binding.fals.setOnClickListener {
-                    inCorrect()
-                }
-                return
-            }
-            if (vModel.count == 1) {
-                binding.textView.text =
-                    "Question ${vModel.count + 1} :    ${vModel.listOfQuastions[vModel.count].question}"
-                binding.tru.setOnClickListener {
-                    inCorrect()
-                }
-                binding.fals.setOnClickListener {
-                    correct()
-                }
-                return
-            }
-            if (vModel.count == 2) {
-                binding.textView.text =
-                    "Question ${vModel.count + 1} :    ${vModel.listOfQuastions[vModel.count].question}"
-                binding.tru.setOnClickListener {
-                    inCorrect()
-                }
-                binding.fals.setOnClickListener {
-                    correct()
-                }
-                return
-            }
-
-            if (vModel.count == 3) {
-                binding.textView.text =
-                    "Question ${vModel.count + 1} :    ${vModel.listOfQuastions[vModel.count].question}"
-                binding.tru.setOnClickListener {
-                    correct()
-                }
-                binding.fals.setOnClickListener {
-                    inCorrect()
-                }
-                return
-            }
-
-            if (vModel.count == 4) {
-                binding.textView.text =
-                    "Question ${vModel.count + 1} :    ${vModel.listOfQuastions[vModel.count].question}"
-                binding.tru.setOnClickListener {
-                    correct()
-                }
-                binding.fals.setOnClickListener {
-                    inCorrect()
-                }
-                return
-            }
-
-            if (vModel.count == 5) {
-                binding.textView.text =
-                    "Question ${vModel.count + 1} :    ${vModel.listOfQuastions[vModel.count].question}"
-                binding.tru.setOnClickListener {
-                    inCorrect()
-                }
-                binding.fals.setOnClickListener {
-                    correct()
-                }
-                return
-            }
-
-            if (vModel.count == 6) {
-                binding.textView.text =
-                    "Question ${vModel.count + 1} :    ${vModel.listOfQuastions[vModel.count].question}"
-                binding.tru.setOnClickListener {
-                    inCorrect()
-                }
-                binding.fals.setOnClickListener {
-                    correct()
-                }
-                return
-            }
-
-            if (vModel.count == 7) {
-                binding.textView.text =
-                    "Question ${vModel.count + 1} :    ${vModel.listOfQuastions[vModel.count].question}"
-                binding.tru.setOnClickListener {
-                    correct()
-                }
-                binding.fals.setOnClickListener {
-                    inCorrect()
-                }
-                return
-            }
-
-            if (vModel.count == 8) {
-                binding.textView.text =
-                    "Question ${vModel.count + 1} :    ${vModel.listOfQuastions[vModel.count].question}"
-                binding.tru.setOnClickListener {
-                    inCorrect()
-                }
-                binding.fals.setOnClickListener {
-                    correct()
-                }
-                return
-            }
-
-            if (vModel.count == 9) {
-                binding.next.isEnabled = false
-                binding.textView.text =
-                    "Question ${vModel.count + 1} :    ${vModel.listOfQuastions[vModel.count].question}"
-                binding.tru.setOnClickListener {
-                    inCorrect()
-                }
-                binding.fals.setOnClickListener {
-                    correct()
-                }
-                return
-            }
-
-         */
 
     }
 
@@ -248,17 +126,26 @@ class FirstFragment : Fragment() {
         } else {
             Toast.makeText(activity, "Correct!", Toast.LENGTH_SHORT).show()
         }
-        //  listOfAnswer.add(count)
-        //  binding.tru.isEnabled = false
-        // binding.fals.isEnabled = false
+        vModel.listOfAnswer.add(vModel.count)
+        disable()
     }
 
     private fun inCorrect() {
         Toast.makeText(activity, "Incorrect!", Toast.LENGTH_SHORT).show()
-        //  listOfAnswer.add(count)
-        // binding.tru.isEnabled=false
-        //  binding.fals.isEnabled=false
+        vModel.listOfAnswer.add(vModel.count)
+        disable()
     }
+
+    private fun disable(){
+        binding.tru.isEnabled=false
+        binding.fals.isEnabled=false
+    }
+
+    private fun enable(){
+        binding.tru.isEnabled=true
+        binding.fals.isEnabled=true
+    }
+
 
 }
 

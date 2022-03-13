@@ -11,11 +11,9 @@ import com.example.hw7_2.databinding.FragmentSecondBinding
 
 class SecondFragment : Fragment() {
     lateinit var  binding : FragmentSecondBinding
-    val vModel: SharedViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
     }
 
     override fun onCreateView(
@@ -34,7 +32,6 @@ class SecondFragment : Fragment() {
 
         val answer=requireArguments().getBoolean("Answer")
         binding.show.setOnClickListener {
-            vModel.listOfQuastions[vModel.cheatNumber].isCheat = true
             binding.textView2.text=answer.toString()
         }
 
