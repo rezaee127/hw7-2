@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.os.bundleOf
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.hw7_2.databinding.FragmentFirstBinding
 
@@ -18,6 +19,8 @@ var listOfAnswer=ArrayList<Int>()
 
 class FirstFragment : Fragment() {
     lateinit var binding:FragmentFirstBinding
+    lateinit var vModel:SharedViewModel
+
     var listOfStrings=ArrayList<String>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,11 +39,8 @@ class FirstFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        vModel = ViewModelProvider(this).get(SharedViewModel::class.java)
 
-        listOfStrings= arrayListOf("1+2=3","2*8=120","14*7=1000","12*12=144","1+6=7"
-                ,"5-2=4","1/2=5","2*3=6","6/3=1","1-5=10")
-        val listOfAnswers= arrayListOf("True","False","False","True","True","False",
-                "False","True","False","False")
 
 
 
